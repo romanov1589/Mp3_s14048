@@ -10,6 +10,8 @@ public class Employee {
     private Manager manager;
     private Gender gender;
 
+    //zwykle dziedziczenie. stan - kompozycja. metody!
+
     public Employee(int id, String name, int workingHoursPerMonth, double hourlyWage, EmployeeType employeeType, EmployeeGender employeeGender) {
         this.id = id;
         this.setName(name);

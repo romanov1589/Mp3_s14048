@@ -3,13 +3,11 @@ package com.company.dynamicinheritance;
 public class Participant {
     private long id;
     private String name;
-//    private String playerLicense;
-//    private String trainerLicense;
     private Trainer trainer;
     private Fan fan;
     private Player player;
 
-    public Participant(long id, String name, ParticipantType type) {
+    public Participant(long id, String name, ParticipantType type, String playerLicanse, String trainerLicense) {
         this.id = id;
         this.setName(name);
         if(type == ParticipantType.FAN){
@@ -17,11 +15,11 @@ public class Participant {
             this.player=null;
             this.trainer=null;
         }else if(type == ParticipantType.PLAYER){
-            this.player = new Player(this);
+            this.player = new Player(this, playerLicanse);
             this.trainer = null;
             this.fan = null;
         }else if(type == ParticipantType.TRAINER){
-            this.trainer = new Trainer(this);
+            this.trainer = new Trainer(this, trainerLicense);
             this.player = null;
             this.fan = null;
         }else{
@@ -51,6 +49,18 @@ public class Participant {
         this.name = name;
     }
 
+    public String play(){
+        if(isPlayer()){
+            return getPlayer().play();
+        }else if(isTrainer()){
+            return getTrainer().play();
+        }else if(isFan()){
+            return getFan().play();
+        }else{
+            return "I'm not playing";
+        }
+    }
+
     public void becomeFan(){
         if(!isFan()){
             this.fan = new Fan(this);
@@ -59,17 +69,17 @@ public class Participant {
         }
     }
 
-    public void becomePlayer(){
+    public void becomePlayer(String playerLicense){
         if(!isPlayer()){
-            this.player = new Player(this);
+            this.player = new Player(this, playerLicense);
             this.fan = null;
             this.trainer = null;
         }
     }
 
-    public void becomeTrainer(){
+    public void becomeTrainer(String trainerLicense){
         if(!isTrainer()){
-            this.trainer = new Trainer(this);
+            this.trainer = new Trainer(this, trainerLicense);
             this.player = null;
             this.fan = null;
         }
@@ -102,31 +112,24 @@ public class Participant {
         return false;
     }
 
-//    public void setPlayerLicense(String playerLicense){
-//        if(isPlayer()) {
-//            this.playerLicense = playerLicense;
-//            this.trainerLicense = null;
-//        }
-//    }
-//
-//    public void setTrainerLicense(String trainerLicense){
-//        if(isTrainer()){
-//            this.trainerLicense = trainerLicense;
-//            this.playerLicense = null;
-//        }
-//    }
-//
-//    public String getPlayerLicense() {
-//        return playerLicense;
-//    }
-//
-//    public String getTrainerLicense() {
-//        return trainerLicense;
-//    }
+    public void setPlayerLicense(String playerLicense){
+        if(isPlayer()) {
+            player.setPlayerLicense(playerLicense);
+        }
+    }
 
-    public String toString(){
-        return getId() + " " + getName() + "\n" + "Player: " + isPlayer() + "\n" + "Trainer: " + isTrainer()
-                + '\n' + "Fan: " + isFan();
+    public void setTrainerLicense(String trainerLicense){
+        if(isTrainer()){
+            trainer.setTrainerLicense(trainerLicense);
+        }
+    }
+
+    public String getPlayerLicense() {
+        return getPlayer().getPlayerLicense();
+    }
+
+    public String getTrainerLicense() {
+        return getTrainer().getTrainerLicense();
     }
 
     public Trainer getTrainer() {
@@ -136,18 +139,6 @@ public class Participant {
         return trainer;
     }
 
-//    public void setTrainer(Trainer trainer) {
-//        this.trainer = trainer;
-//    }
-
-//    public Fan getFan() {
-//        return fan;
-//    }
-
-//    public void setFan(Fan fan) {
-//        this.fan = fan;
-//    }
-
     public Player getPlayer() {
         if(!isPlayer()){
             throw new NullPointerException("Isn't a player!");
@@ -155,7 +146,17 @@ public class Participant {
         return player;
     }
 
-//    public void setPlayer(Player player) {
-//        this.player = player;
-//    }
+    public Fan getFan() {
+        if(!isFan()){
+            throw new NullPointerException("Isn't a fun!");
+        }
+        return fan;
+    }
+
+    public String toString(){
+        return getId() + " " + getName() + "\n" + "Player: " + isPlayer() + "\n" + "Trainer: " + isTrainer()
+                + "\n" + "Fan: " + isFan() + "\n" + ( isPlayer() ? getPlayer().getPlayerLicense() : "")
+                + (isTrainer() ? getTrainer().getTrainerLicense() : "");
+    }
+
 }

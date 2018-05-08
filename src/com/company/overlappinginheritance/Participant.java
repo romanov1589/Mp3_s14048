@@ -8,6 +8,8 @@ public class Participant {
     private String playerLicense;
     private String trainerLicense;
 
+    //nie zmieniamy stanu. wszystko w konstruktorze. sprawdzenie kym jest.
+
     private EnumSet<ParticipantType> participantTypes = EnumSet.of(ParticipantType.PARTICIPANT);
 
 

@@ -9,4 +9,8 @@ public class Fan {
         }
         this.participant = participant;
     }
+
+    public String play(){
+        return "Play as amateur";
+    }
 }
