@@ -1,65 +1,42 @@
 package com.company.aspectinheritance;
 
-public class Employee {
+import java.time.LocalDate;
+
+public abstract class Employee {
     private int id;
     private String name;
     private int workingHoursPerMonth;
     private double hourlyWage;
+    private Status status;
 
-    private Intern intern;
-    private Manager manager;
-    private Gender gender;
+    public abstract double getMonthlySalary();
 
-    //zwykle dziedziczenie. stan - kompozycja. metody!
 
-    public Employee(int id, String name, int workingHoursPerMonth, double hourlyWage, EmployeeType employeeType, EmployeeGender employeeGender) {
+    public Employee(int id, String name, int workingHoursPerMonth, double hourlyWage, StatusType statusType,
+                    LocalDate hired, long internshipWeeks) {
         this.id = id;
         this.setName(name);
         this.workingHoursPerMonth = workingHoursPerMonth;
         this.hourlyWage = hourlyWage;
-        if(employeeType == EmployeeType.INTERN){
-            this.intern = new Intern(this);
-            this.manager = null;
-        }else if(employeeType == EmployeeType.MANAGER){
-            this.manager = new Manager(this);
-            this.intern = null;
-        }else{
-            this.manager = null;
-            this.intern = null;
-        }
-        if(employeeGender == EmployeeGender.FEMALE){
-            this.gender = new Female();
-        }else if(employeeGender == EmployeeGender.MALE){
-            this.gender = new Male();
+        if (statusType == StatusType.INTERN) {
+            this.status = new Intern(internshipWeeks);
+        } else if (statusType == StatusType.WORKER) {
+            this.status = new Worker(hired);
         }
     }
 
-    public void becomeIntern(){
-        if(!isIntern()){
-            this.intern = new Intern(this);
-            this.manager = null;
-        }
+    public void becomeWorker(LocalDate hired) {
+//        if(this.status instanceof Worker){
+//            throw new IllegalArgumentException("You are worker now");
+//        }
+        this.status = new Worker(hired);
     }
 
-    private boolean isIntern() {
-        if(this.intern != null){
-            return true;
-        }
-        return false;
-    }
-
-    public void becomeManager(){
-        if(!isManager()){
-            this.intern = null;
-            this.manager = new Manager(this);
-        }
-    }
-
-    private boolean isManager() {
-        if(this.manager != null){
-            return true;
-        }
-        return false;
+    public void becomeIntern(long internshipWeeks) {
+//        if(this.status instanceof Intern){
+//            throw new IllegalArgumentException("You are intern now");
+//        }
+        this.status = new Intern(internshipWeeks);
     }
 
     public int getId() {
@@ -75,7 +52,7 @@ public class Employee {
     }
 
     public void setName(String name) {
-        if(name == null){
+        if (name == null) {
             throw new IllegalArgumentException("Name can't be null");
         }
         this.name = name;
@@ -97,40 +74,11 @@ public class Employee {
         this.hourlyWage = hourlyWage;
     }
 
-    public double getManagerBonus(){
-        if(isManager()) {
-            return getManager().getBonus();
-        }
-        return 0;
+    public String toString() {
+        return getId() + " " + getName() + " Salary: " + getMonthlySalary() + "\n" + "Status: " + getStatus();
     }
 
-    public void setManagerBonus(double managerBonus){
-        if(isManager()) {
-            getManager().setBonus(managerBonus);
-        }
-    }
-
-    public double getSalary(){
-         if(isManager()){
-            return getManagerBonus() + (hourlyWage*workingHoursPerMonth);
-        }else{
-            return hourlyWage * workingHoursPerMonth;
-        }
-    }
-
-    public Intern getIntern() {
-        return intern;
-    }
-
-    public Manager getManager() {
-        return manager;
-    }
-
-    public Gender getGender(){
-        return gender;
-    }
-
-    public String toString(){
-        return getId() + " " + getName() + "\n" + "Intern: " + isIntern() + "\n" + "Manager: " + isManager();
+    public Status getStatus() {
+        return status;
     }
 }

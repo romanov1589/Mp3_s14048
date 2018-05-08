@@ -10,19 +10,19 @@ public class Participant {
     public Participant(long id, String name, ParticipantType type, String playerLicanse, String trainerLicense) {
         this.id = id;
         this.setName(name);
-        if(type == ParticipantType.FAN){
+        if (type == ParticipantType.FAN) {
             this.fan = new Fan(this);
-            this.player=null;
-            this.trainer=null;
-        }else if(type == ParticipantType.PLAYER){
+            this.player = null;
+            this.trainer = null;
+        } else if (type == ParticipantType.PLAYER) {
             this.player = new Player(this, playerLicanse);
             this.trainer = null;
             this.fan = null;
-        }else if(type == ParticipantType.TRAINER){
+        } else if (type == ParticipantType.TRAINER) {
             this.trainer = new Trainer(this, trainerLicense);
             this.player = null;
             this.fan = null;
-        }else{
+        } else {
             this.player = null;
             this.trainer = null;
             this.fan = null;
@@ -43,85 +43,82 @@ public class Participant {
     }
 
     public void setName(String name) {
-        if(name == null){
+        if (name == null) {
             throw new IllegalArgumentException("Name can't be null");
         }
         this.name = name;
     }
 
-    public String play(){
-        if(isPlayer()){
+    public String play() {
+        if (isPlayer()) {
             return getPlayer().play();
-        }else if(isTrainer()){
+        } else if (isTrainer()) {
             return getTrainer().play();
-        }else if(isFan()){
+        } else if (isFan()) {
             return getFan().play();
-        }else{
+        } else {
             return "I'm not playing";
         }
     }
 
-    public void becomeFan(){
-        if(!isFan()){
+    public void becomeFan() {
+        if (!isFan()) {
             this.fan = new Fan(this);
             this.player = null;
             this.trainer = null;
         }
     }
 
-    public void becomePlayer(String playerLicense){
-        if(!isPlayer()){
+    public void becomePlayer(String playerLicense) {
+        if (!isPlayer()) {
             this.player = new Player(this, playerLicense);
             this.fan = null;
             this.trainer = null;
         }
     }
 
-    public void becomeTrainer(String trainerLicense){
-        if(!isTrainer()){
+    public void becomeTrainer(String trainerLicense) {
+        if (!isTrainer()) {
             this.trainer = new Trainer(this, trainerLicense);
             this.player = null;
             this.fan = null;
         }
     }
 
-    public void becomeParticipant(){
-        this.player = null;
-        this.trainer = null;
-        this.fan = null;
-    }
+//    public void becomeParticipant(){
+//        this.player = null;
+//        this.trainer = null;
+//        this.fan = null;
+//    }
 
-    public boolean isFan(){
-        if(this.fan!=null){
+    public boolean isFan() {
+        if (this.fan != null) {
             return true;
         }
         return false;
     }
 
-    public boolean isPlayer(){
-        if(this.player!=null){
+    public boolean isPlayer() {
+        if (this.player != null) {
             return true;
         }
         return false;
     }
 
-    public boolean isTrainer(){
-        if(this.trainer!=null){
+    public boolean isTrainer() {
+        if (this.trainer != null) {
             return true;
         }
         return false;
     }
 
-    public void setPlayerLicense(String playerLicense){
-        if(isPlayer()) {
-            player.setPlayerLicense(playerLicense);
-        }
+    public void setPlayerLicense(String playerLicense) {
+        getPlayer().setPlayerLicense(playerLicense);
+
     }
 
-    public void setTrainerLicense(String trainerLicense){
-        if(isTrainer()){
-            trainer.setTrainerLicense(trainerLicense);
-        }
+    public void setTrainerLicense(String trainerLicense) {
+        getTrainer().setTrainerLicense(trainerLicense);
     }
 
     public String getPlayerLicense() {
@@ -133,29 +130,29 @@ public class Participant {
     }
 
     public Trainer getTrainer() {
-        if(!isTrainer()){
+        if (!isTrainer()) {
             throw new NullPointerException("Isn't a trainer!");
         }
         return trainer;
     }
 
     public Player getPlayer() {
-        if(!isPlayer()){
+        if (!isPlayer()) {
             throw new NullPointerException("Isn't a player!");
         }
         return player;
     }
 
     public Fan getFan() {
-        if(!isFan()){
+        if (!isFan()) {
             throw new NullPointerException("Isn't a fun!");
         }
         return fan;
     }
 
-    public String toString(){
+    public String toString() {
         return getId() + " " + getName() + "\n" + "Player: " + isPlayer() + "\n" + "Trainer: " + isTrainer()
-                + "\n" + "Fan: " + isFan() + "\n" + ( isPlayer() ? getPlayer().getPlayerLicense() : "")
+                + "\n" + "Fan: " + isFan() + "\n" + (isPlayer() ? getPlayer().getPlayerLicense() : "")
                 + (isTrainer() ? getTrainer().getTrainerLicense() : "");
     }
 

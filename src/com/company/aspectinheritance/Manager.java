@@ -1,14 +1,14 @@
 package com.company.aspectinheritance;
 
-public class Manager {
-    private double bonus;
-    private Employee employee;
+import java.time.LocalDate;
 
-    public Manager(Employee employee) {
-        if(employee == null){
-            throw new IllegalArgumentException("Employee can't be null");
-        }
-        this.employee = employee;
+public class Manager extends Employee {
+    private double bonus;
+
+    public Manager(int id, String name, int workingHoursPerMonth, double hourlyWage, double bonus,
+                   StatusType statusType, LocalDate hired, long internshipWeeks) {
+        super(id, name, workingHoursPerMonth, hourlyWage, statusType, hired, internshipWeeks);
+        this.bonus = bonus;
     }
 
     public double getBonus() {
@@ -17,5 +17,11 @@ public class Manager {
 
     public void setBonus(double bonus) {
         this.bonus = bonus;
+    }
+
+
+    @Override
+    public double getMonthlySalary() {
+        return (super.getHourlyWage() * super.getWorkingHoursPerMonth()) + getBonus();
     }
 }

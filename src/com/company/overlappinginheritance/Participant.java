@@ -7,55 +7,48 @@ public class Participant {
     private String name;
     private String playerLicense;
     private String trainerLicense;
+    private long playerWorkingDaysPerWeek;
+    private long trainerWorkingDaysPerWeek;
+    private static int weeksInTheYear = 48;
+    private EnumSet<ParticipantType> participantTypes;
 
-    //nie zmieniamy stanu. wszystko w konstruktorze. sprawdzenie kym jest.
+    public long getWorkingDaysPerYear() {
+        if (isTrainer() && isPlayer()) {
+            return (playerWorkingDaysPerWeek + trainerWorkingDaysPerWeek) / 2 * weeksInTheYear;
+        } else if (isTrainer()) {
+            return trainerWorkingDaysPerWeek * weeksInTheYear;
+        } else {
+            return playerWorkingDaysPerWeek * weeksInTheYear;
+        }
+    }
 
-    private EnumSet<ParticipantType> participantTypes = EnumSet.of(ParticipantType.PARTICIPANT);
-
-
-    public Participant(long id, String name) {
+    public Participant(long id, String name, String playerLicense, String trainerLicense, EnumSet<ParticipantType> participantTypes,
+                       long playerWorkingDaysPerWeek, long trainerWorkingDaysPerWeek) {
         this.id = id;
         this.setName(name);
-    }
-
-    public void becomeFan(){
-        if(!participantTypes.contains(ParticipantType.FAN)){
-            participantTypes.add(ParticipantType.FAN);
+        this.participantTypes = participantTypes;
+        if (participantTypes.contains(ParticipantType.PLAYER)) {
+            this.setPlayerLicense(playerLicense);
+            this.playerWorkingDaysPerWeek = playerWorkingDaysPerWeek;
+        }
+        if (participantTypes.contains(ParticipantType.TRAINER)) {
+            this.setTrainerLicense(trainerLicense);
+            this.trainerWorkingDaysPerWeek = trainerWorkingDaysPerWeek;
         }
     }
 
-    public void stopBeingFan(){
-        if(participantTypes.contains(ParticipantType.FAN)){
-            participantTypes.remove(ParticipantType.FAN);
+    public boolean isPlayer() {
+        if (this.participantTypes.contains(ParticipantType.PLAYER)) {
+            return true;
         }
+        return false;
     }
 
-    public void becomePlayer(String playerLicense){
-        this.setPlayerLicense(playerLicense);
-        if(!participantTypes.contains(ParticipantType.PLAYER)){
-            participantTypes.add(ParticipantType.PLAYER);
+    public boolean isTrainer() {
+        if (this.participantTypes.contains(ParticipantType.TRAINER)) {
+            return true;
         }
-    }
-
-    public void stopBeingPlayer(){
-        if(participantTypes.contains(ParticipantType.PLAYER)){
-            participantTypes.remove(ParticipantType.PLAYER);
-            this.playerLicense = null;
-        }
-    }
-
-    public void becomeTrainer(String trainerLicense){
-        this.setTrainerLicense(trainerLicense);
-        if(!participantTypes.contains(ParticipantType.TRAINER)){
-            participantTypes.add(ParticipantType.TRAINER);
-        }
-    }
-
-    public void stopBeingTrainer(){
-        if(participantTypes.contains(ParticipantType.TRAINER)){
-            participantTypes.remove(ParticipantType.TRAINER);
-            this.trainerLicense = null;
-        }
+        return false;
     }
 
     public long getId() {
@@ -71,7 +64,7 @@ public class Participant {
     }
 
     public void setName(String name) {
-        if(name == null){
+        if (name == null) {
             throw new IllegalArgumentException("Name can't be null!");
         }
         this.name = name;
@@ -82,8 +75,11 @@ public class Participant {
     }
 
     public void setPlayerLicense(String playerLicense) {
-        if(playerLicense == null){
+        if (playerLicense == null) {
             throw new IllegalArgumentException("Player license can't be null!");
+        }
+        if (!isPlayer()) {
+            throw new NullPointerException("Isn't a player!");
         }
         this.playerLicense = playerLicense;
     }
@@ -93,10 +89,35 @@ public class Participant {
     }
 
     public void setTrainerLicense(String trainerLicense) {
-        if(trainerLicense == null){
+        if (trainerLicense == null) {
             throw new IllegalArgumentException("Trainer License can't be null!");
         }
+        if (!isTrainer()) {
+            throw new NullPointerException("Isn't a trainer!");
+        }
         this.trainerLicense = trainerLicense;
+    }
+
+    public long getPlayerWorkingDaysPerWeek() {
+        return playerWorkingDaysPerWeek;
+    }
+
+    public void setPlayerWorkingDaysPerWeek(long playerWorkingDaysPerWeek) {
+        if (!isPlayer()) {
+            throw new NullPointerException("Isn't a player!");
+        }
+        this.playerWorkingDaysPerWeek = playerWorkingDaysPerWeek;
+    }
+
+    public long getTrainerWorkingDaysPerWeek() {
+        return trainerWorkingDaysPerWeek;
+    }
+
+    public void setTrainerWorkingDaysPerWeek(long trainerWorkingDaysPerWeek) {
+        if (!isTrainer()) {
+            throw new NullPointerException("Isn't a trainer!");
+        }
+        this.trainerWorkingDaysPerWeek = trainerWorkingDaysPerWeek;
     }
 
     public EnumSet<ParticipantType> getParticipantTypes() {
@@ -104,9 +125,9 @@ public class Participant {
         return types;
     }
 
-    public String toString(){
-        return getId() + " " + getName() + "\n" + (getPlayerLicense()!=null ? getPlayerLicense() : "none") + "\n"
-                +(getTrainerLicense()!=null ? getTrainerLicense() : "none") + "\n" + getParticipantTypes();
+    public String toString() {
+        return getId() + " " + getName() + "\n" + (getPlayerLicense() != null ? getPlayerLicense() : "none") + "\n"
+                + (getTrainerLicense() != null ? getTrainerLicense() : "none") + "\n" + getParticipantTypes();
     }
 
 }

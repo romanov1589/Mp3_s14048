@@ -5,14 +5,14 @@ public class Player {
     private Participant participant;
 
     public Player(Participant participant, String playerLicense) {
-        if(participant == null){
+        if (participant == null) {
             throw new IllegalArgumentException("Participant can't be null");
         }
         this.participant = participant;
         this.setPlayerLicense(playerLicense);
     }
 
-    public String play(){
+    public String play() {
         return "Play as professional player!";
     }
 
@@ -21,7 +21,7 @@ public class Player {
     }
 
     public void setPlayerLicense(String playerLicense) {
-        if(playerLicense == null){
+        if (playerLicense == null) {
             throw new IllegalArgumentException("Player licanse can't be null");
         }
         this.playerLicense = playerLicense;
