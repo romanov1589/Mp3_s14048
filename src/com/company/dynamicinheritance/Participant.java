@@ -3,8 +3,8 @@ package com.company.dynamicinheritance;
 public class Participant {
     private long id;
     private String name;
-    private String playerLicense;
-    private String trainerLicense;
+//    private String playerLicense;
+//    private String trainerLicense;
     private Trainer trainer;
     private Fan fan;
     private Player player;
@@ -102,31 +102,60 @@ public class Participant {
         return false;
     }
 
-    public void setPlayerLicense(String playerLicense){
-        if(isPlayer()) {
-            this.playerLicense = playerLicense;
-            this.trainerLicense = null;
-        }
-    }
-
-    public void setTrainerLicense(String trainerLicense){
-        if(isTrainer()){
-            this.trainerLicense = trainerLicense;
-            this.playerLicense = null;
-        }
-    }
-
-    public String getPlayerLicense() {
-        return playerLicense;
-    }
-
-    public String getTrainerLicense() {
-        return trainerLicense;
-    }
+//    public void setPlayerLicense(String playerLicense){
+//        if(isPlayer()) {
+//            this.playerLicense = playerLicense;
+//            this.trainerLicense = null;
+//        }
+//    }
+//
+//    public void setTrainerLicense(String trainerLicense){
+//        if(isTrainer()){
+//            this.trainerLicense = trainerLicense;
+//            this.playerLicense = null;
+//        }
+//    }
+//
+//    public String getPlayerLicense() {
+//        return playerLicense;
+//    }
+//
+//    public String getTrainerLicense() {
+//        return trainerLicense;
+//    }
 
     public String toString(){
         return getId() + " " + getName() + "\n" + "Player: " + isPlayer() + "\n" + "Trainer: " + isTrainer()
                 + '\n' + "Fan: " + isFan();
     }
 
+    public Trainer getTrainer() {
+        if(!isTrainer()){
+            throw new NullPointerException("Isn't a trainer!");
+        }
+        return trainer;
+    }
+
+//    public void setTrainer(Trainer trainer) {
+//        this.trainer = trainer;
+//    }
+
+//    public Fan getFan() {
+//        return fan;
+//    }
+
+//    public void setFan(Fan fan) {
+//        this.fan = fan;
+//    }
+
+    public Player getPlayer() {
+        if(!isPlayer()){
+            throw new NullPointerException("Isn't a player!");
+        }
+        return player;
+    }
+
+//    public void setPlayer(Player player) {
+//        this.player = player;
+//    }
 }

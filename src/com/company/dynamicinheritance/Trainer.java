@@ -1,7 +1,7 @@
 package com.company.dynamicinheritance;
 
 public class Trainer {
-    //private String trainerLicense;
+    private String trainerLicense;
     private Participant participant;
 
     public Trainer(Participant participant) {
@@ -11,15 +11,15 @@ public class Trainer {
         this.participant = participant;
     }
 
-//    public String getTrainerLicense() {
-//        return trainerLicense;
-//    }
-//
-//    public void setTrainerLicense(String trainerLicense) {
-//        if(trainerLicense == null){
-//            throw new IllegalArgumentException("Trainer license can't be null");
-//        }
-//        this.trainerLicense = trainerLicense;
-//    }
+    public String getTrainerLicense() {
+        return trainerLicense;
+    }
+
+    public void setTrainerLicense(String trainerLicense) {
+        if(trainerLicense == null){
+            throw new IllegalArgumentException("Trainer license can't be null");
+        }
+        this.trainerLicense = trainerLicense;
+    }
 
 }
