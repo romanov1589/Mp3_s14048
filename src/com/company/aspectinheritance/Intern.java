@@ -1,9 +1,9 @@
 package com.company.aspectinheritance;
 
 public class Intern extends Status {
-    private long internshipWeeks;
+    private Long internshipWeeks;
 
-    public Intern(long internshipWeeks) {
+    public Intern(Long internshipWeeks) {
         this.internshipWeeks = internshipWeeks;
     }
 
@@ -11,7 +11,7 @@ public class Intern extends Status {
         return internshipWeeks;
     }
 
-    public void setInternshipWeeks(long internshipWeeks) {
+    public void setInternshipWeeks(Long internshipWeeks) {
         this.internshipWeeks = internshipWeeks;
     }
 

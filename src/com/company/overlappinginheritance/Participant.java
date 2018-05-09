@@ -71,6 +71,9 @@ public class Participant {
     }
 
     public String getPlayerLicense() {
+        if (!isPlayer()) {
+            throw new IllegalArgumentException("Isn't a player!");
+        }
         return playerLicense;
     }
 
@@ -79,12 +82,15 @@ public class Participant {
             throw new IllegalArgumentException("Player license can't be null!");
         }
         if (!isPlayer()) {
-            throw new NullPointerException("Isn't a player!");
+            throw new IllegalArgumentException("Isn't a player!");
         }
         this.playerLicense = playerLicense;
     }
 
     public String getTrainerLicense() {
+        if (!isTrainer()) {
+            throw new IllegalArgumentException("Isn't a trainer!");
+        }
         return trainerLicense;
     }
 
@@ -93,7 +99,7 @@ public class Participant {
             throw new IllegalArgumentException("Trainer License can't be null!");
         }
         if (!isTrainer()) {
-            throw new NullPointerException("Isn't a trainer!");
+            throw new IllegalArgumentException("Isn't a trainer!");
         }
         this.trainerLicense = trainerLicense;
     }

@@ -13,7 +13,7 @@ public abstract class Employee {
 
 
     public Employee(int id, String name, int workingHoursPerMonth, double hourlyWage, StatusType statusType,
-                    LocalDate hired, long internshipWeeks) {
+                    LocalDate hired, Long internshipWeeks) {
         this.id = id;
         this.setName(name);
         this.workingHoursPerMonth = workingHoursPerMonth;

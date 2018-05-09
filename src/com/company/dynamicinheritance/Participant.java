@@ -131,21 +131,21 @@ public class Participant {
 
     public Trainer getTrainer() {
         if (!isTrainer()) {
-            throw new NullPointerException("Isn't a trainer!");
+            throw new IllegalArgumentException("Isn't a trainer!");
         }
         return trainer;
     }
 
     public Player getPlayer() {
         if (!isPlayer()) {
-            throw new NullPointerException("Isn't a player!");
+            throw new IllegalArgumentException("Isn't a player!");
         }
         return player;
     }
 
     public Fan getFan() {
         if (!isFan()) {
-            throw new NullPointerException("Isn't a fun!");
+            throw new IllegalArgumentException("Isn't a fun!");
         }
         return fan;
     }
